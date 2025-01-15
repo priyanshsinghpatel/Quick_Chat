@@ -4,10 +4,10 @@ import "./userInfo.css"
 const Userinfo = () => {
   return (
 
-    <div className='Userinfo'>
+    <div className='userInfo'>
         <div className="user">
             <img src="./avatar.png" alt="" />
-            <h2>Priyansh </h2>
+            <h2>Priyansh Singh Patel</h2>
         </div>
         <div className="icons">
             <img src="./more.png" alt="" />
