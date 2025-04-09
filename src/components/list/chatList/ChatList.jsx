@@ -18,7 +18,7 @@ const ChatList = () => {
 
             const promises = items.map(async (item)=>{
                 const userDocRef = doc(db, "users", item.receiverId);
-                const userDocSnap = await getDoc(docRef);
+                const userDocSnap = await getDoc(userDocRef);
 
                 const user = userDocSnap.data();
 
@@ -50,9 +50,9 @@ const ChatList = () => {
         </div>
          {chats.map((chat) => (
           <div className="item" key={chat.chatId}>
-            <img src="./avatar.png" alt="" />
+            <img src={chat.user.avatar || "./avatar.png"} alt="" />
             <div className="texts">
-                <span>Prashant Sahu</span>
+                <span>{chat.user.username}</span>
                 <p>{chat.lastmessage}</p>
             </div>
           </div>
