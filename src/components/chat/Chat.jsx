@@ -12,7 +12,7 @@ import { db } from "../../lib/firebase";
 import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
 import upload from "../../lib/upload";
-
+import useStore from "./store";
 
 const Chat = () => {
   const [chat, setChat] = useState();
@@ -24,6 +24,15 @@ const Chat = () => {
   })
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } = useChatStore();
   const { currentUser } = useUserStore()
+
+  const aiMessage = useStore((state) => state.message)
+
+  useEffect(() => {
+    if (aiMessage !== "") {
+      setText(aiMessage); // Update the text state when aiMessage changes
+    }
+  }, [aiMessage]); 
+
   const endRef = useRef(null)
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -132,8 +141,7 @@ const Chat = () => {
                 src={message.img}
                 alt=""
               />}
-              <p>{message.text} </p>
-              {/* <span>{message}</span> */}
+              <p>{ message.text} </p>
             </div>
           </div>
         ))}
@@ -158,11 +166,11 @@ const Chat = () => {
           <img src="./mic.png" alt="" />
         </div>
         <input type="text"
-          placeholder={(isCurrentUserBlocked || isReceiverBlocked) ?"You cannot Send a message" : "Type a message...."}
+          placeholder={(isCurrentUserBlocked || isReceiverBlocked) ? "You cannot Send a message" : "Type a message...."}
           value={text}
-          onChange={(e) => setText(e.target.value)} 
+          onChange={(e) => setText(e.target.value)}
           disabled={isCurrentUserBlocked || isReceiverBlocked}
-          />
+        />
         <div className="emoji">
           <img src="./emoji.png" alt="" onClick={() => setOpen(prev => !prev)} />
           <div className="picker">
